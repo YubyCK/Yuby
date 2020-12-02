@@ -4,25 +4,26 @@ import time
 def measure_sort_time(sorting_function, arr):
     start = time.time()
     sorting_function(arr)
-    number = 1
-    if str(sorting_function).split(".")[0] == "<function first_sorting":
-        for i in sorting_function(arr):
-            if number == len(arr):
-                break
-            if i > sorting_function(arr)[number]:
-                print("Not sorted")
-                break
-            number += 1
-    if str(sorting_function).split(".")[0] == "<function second_sorting":
-        for i in sorting_function(arr):
-            if number == len(arr):
-                break
-            if i < sorting_function(arr)[number]:
-                print("Not sorted")
-                break
-            number += 1
+    if is_sorted(sorting_function(arr)) is True or is_sorted2(sorting_function(arr)) is True:
+        print("Sorted")
+    else:
+        print("Not sorted")
     end = time.time()
     return end - start
+
+
+def is_sorted(lst, key=lambda x: x):
+    for i, el in enumerate(lst[1:]):
+        if key(el) < key(lst[i]):
+            return False
+    return True
+
+
+def is_sorted2(lst, key=lambda x: x):
+    for i, el in enumerate(lst[1:]):
+        if key(el) > key(lst[i]):
+            return False
+    return True
 
 
 def first_sorting():
