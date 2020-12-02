@@ -3,16 +3,21 @@ import time
 
 def measure_sort_time(sorting_function, arr):
     start = time.time()
-    sorting_function(arr)
+    result = sorting_function(arr)
     end = time.time()
-    print(is_ascending(sorting_function(arr)) or is_descending(sorting_function(arr)))
+    if is_ascending(result) or is_descending(result):
+        print("Sorted")
     return end - start
 
 
-def is_sorted(elements, key=lambda x, y: x <= y):
+def is_sorted(elements, key=lambda x: x, reverse=False):
+    order = lambda x, y: x <= y
+    if reverse:
+        order = lambda x, y: x >= y
+
     for idx in range(len(elements) - 1):
         x, y = elements[idx], elements[idx + 1]
-        if not key(x, y):
+        if not order(key(x), key(y)):
             return False
     return True
 
@@ -22,7 +27,7 @@ def is_ascending(elements):
 
 
 def is_descending(elements):
-    return is_sorted(elements, key=lambda x, y: x >= y)
+    return is_sorted(elements, reverse=True)
 
 
 def first_sorting():
